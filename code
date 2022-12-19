@@ -1,0 +1,71 @@
+#include <stdio.h>
+#include <time.h>
+
+int main() {
+time_t current_time;
+struct tm *time_info;
+char time_string[100];
+
+time(&current_time);
+time_info = localtime(&current_time);
+
+int current_year = time_info->tm_year + 1900;
+int current_month = time_info->tm_mon + 1;
+
+int days, hours, minutes, seconds;
+
+if (current_month == 12 && time_info->tm_mday == 31) {
+days = 0;
+hours = 0;
+minutes = 0;
+seconds = 0;
+} 
+
+else {
+days = 31 - time_info->tm_mday;
+
+if (current_month < 12) {
+days += 31 - (11 - current_month); 
+}
+
+if (current_month <= 11) {
+days += 30 - (10 - current_month); 
+}
+
+if (current_month <= 10) {
+days += 31 - (9 - current_month);
+}
+
+if (current_month <= 9) {
+days += 30 - (8 - current_month); 
+}
+
+if (current_month <= 8) {
+days += 31 - (7 - current_month); 
+}
+
+if (current_month <= 2) {
+days += 28 - (1 - current_month); 
+}
+
+if (current_year % 4 == 0 && (current_year % 100 != 0 || current_year % 400 == 0)) {
+
+if (current_month <= 1) {
+days++; 
+}
+}
+
+hours = 23 - time_info->tm_hour;
+minutes = 59 - time_info->tm_min;
+seconds = 59 - time_info->tm_sec;
+
+}
+
+printf("\n");
+printf(" Countdown to New Year's Eve:\n");
+printf(" %d days, %d hours, %d minutes, %d seconds\n", days, hours, minutes, seconds);
+printf("\n");
+
+return 0;
+
+}
